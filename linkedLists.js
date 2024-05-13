@@ -1,96 +1,114 @@
+import nodes from "./Nodes.js";
+
+let lists = null;
+
 const linkedLists = () => {
-  const append = (nodeFunc, node, value) => {
+  const append = (value, nodes) => {
     let val = value;
-    let tmp = node;
+
+    if (lists === null) {
+      lists = nodes(val).node;
+    } else {
+      let tmp = lists;
+
+      while (tmp.next !== null) {
+        tmp = tmp.next;
+      }
+      tmp.next = nodes(val).node;
+    }
+  };
+
+  const prepend = (value, nodes) => {
+    let val = value;
+
+    let tmp = lists;
+    tmp = nodes(value, lists).node;
+
+    lists = tmp;
+  };
+
+  const size = () => {
+    let tmp = lists;
+    let count = tmp === null ? 0 : 1;
 
     if (tmp === null) {
-      tmp = nodeFunc(val).node;
-      node = tmp;
-      return node;
-    }
-    if (tmp.next === null) {
-      tmp.next = nodeFunc(val).node;
-      node = tmp;
-      return node;
+      return 0;
     }
     while (tmp.next !== null) {
+      count++;
+      console.log(tmp);
       tmp = tmp.next;
-
-      if (tmp.next === null) {
-        tmp.next = nodeFunc(val).node;
-        node = tmp;
-        return node;
-      }
     }
 
-    return node;
+    return { count };
   };
 
-  const prepend = (nodeFunc, value, node) => {
-    let val = value;
-    let tmp = node;
+  const head = () => {
+    let tmp = lists;
 
-    tmp = nodeFunc(val, tmp).node;
-    sample = tmp;
-
-    return sample;
+    return tmp.val;
   };
 
-  const size = (node) => {
-    let tmp = node;
-    let len = node ? 1 : 0;
+  const tail = () => {
+    let tmp = lists;
 
-    while (tmp.next !== null) {
-      tmp = tmp.next;
-      len++;
+    if (tmp === null) {
+      return null;
     }
-
-    return {
-      len,
-    };
-  };
-
-  const head = (nodes) => {
-    let tmp = nodes;
-    tmp.next = null;
-
-    return tmp;
-  };
-
-  const tail = (nodes) => {
-    let tmp = nodes;
-    let end = {};
-
     while (tmp.next !== null) {
       tmp = tmp.next;
     }
 
-    if (tmp.next === null) {
-      end = tmp;
-    }
-
-    return end;
+    return tmp.val;
   };
 
-  const at = (nodes, index, size) => {
-    let tmp = nodes;
-    let given = index;
+  const at = (index) => {
+    let tmp = lists;
+    let aim = index;
 
-    if (index > size(tmp).len) {
+    for (let i = 0; i < aim - 1; i++) {
+      tmp = tmp.next;
+    }
+
+    return tmp.val;
+  };
+
+  const pop = (len) => {
+    let tmp = lists;
+    let prev = null;
+    let curr = tmp;
+
+    if (tmp === null) {
+      return null;
+    }
+
+    if (len().count === 1) {
       tmp = null;
-      return tmp;
     }
 
-    for (let i = 0; i < index - 1; i++) {
-      tmp = tmp.next;
+    while (curr.next !== null) {
+      prev = curr;
+      curr = curr.next;
     }
 
-    tmp.next = null;
+    if (prev !== null) {
+      prev.next = null;
+    }
 
-    return tmp;
+    return prev;
   };
 
-  return { append, prepend, size, head, tail, at };
+  return { append, prepend, size, head, tail, at, pop };
 };
 
-export default linkedLists;
+const LinkedLists = linkedLists();
+
+LinkedLists.append(1, nodes);
+LinkedLists.append(2, nodes);
+LinkedLists.prepend(3, nodes); // 3 -> 1 -> 2
+LinkedLists.prepend(4, nodes); // 4 -> 3 -> 1 -> 2
+
+LinkedLists.pop(), // 2
+  LinkedLists.pop(), // 1
+  LinkedLists.pop(), // 3
+  console.log(lists);
