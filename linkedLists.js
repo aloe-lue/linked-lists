@@ -29,14 +29,10 @@ const linkedLists = () => {
 
   const size = () => {
     let tmp = lists;
-    let count = tmp === null ? 0 : 1;
+    let count = 0;
 
-    if (tmp === null) {
-      return 0;
-    }
-    while (tmp.next !== null) {
+    while (tmp !== null) {
       count++;
-      console.log(tmp);
       tmp = tmp.next;
     }
 
@@ -83,7 +79,7 @@ const linkedLists = () => {
     }
 
     if (len().count === 1) {
-      tmp = null;
+      lists = null;
     }
 
     while (curr.next !== null) {
@@ -101,14 +97,10 @@ const linkedLists = () => {
   return { append, prepend, size, head, tail, at, pop };
 };
 
-const LinkedLists = linkedLists();
+const ll = linkedLists();
 
-LinkedLists.append(1, nodes);
-LinkedLists.append(2, nodes);
-LinkedLists.prepend(3, nodes); // 3 -> 1 -> 2
-LinkedLists.prepend(4, nodes); // 4 -> 3 -> 1 -> 2
+ll.append(1, nodes);
+ll.append(2, nodes);
+ll.prepend(3, nodes); // 3 -> 1 -> 2
+ll.prepend(4, nodes); // 4 -> 3 -> 1 -> 2
 
-LinkedLists.pop(), // 2
-  LinkedLists.pop(), // 1
-  LinkedLists.pop(), // 3
-  console.log(lists);
