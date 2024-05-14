@@ -1,8 +1,10 @@
 import nodes from "./Nodes.js";
 
-let lists = null;
-
 const linkedLists = () => {
+  let lists = null;
+
+  const getLists = () => lists;
+
   const append = (value, nodes) => {
     let val = value;
 
@@ -94,13 +96,75 @@ const linkedLists = () => {
     return prev;
   };
 
-  return { append, prepend, size, head, tail, at, pop };
+  const contain = (value) => {
+    let tmp = lists;
+    let val = value;
+    let arr = [];
+    let i = 0;
+
+    while (tmp !== null) {
+      arr[i++] = tmp.val;
+      tmp = tmp.next;
+    }
+
+    let isIncluded = () => arr.includes(value);
+    return { isIncluded, arr };
+  };
+
+  const find = (value, contains) => {
+    let val = value;
+    let contain = contains;
+    let count = 0;
+    let i = 0;
+    let tmp = lists;
+
+    if (tmp === null) {
+      count = null;
+      return count;
+    }
+
+    while (contain(val).arr[i] !== val) {
+      count++;
+      i++;
+    }
+
+    return count;
+  };
+
+  const ToString = (contains) => {
+    let tmp = lists;
+    let contain = contains;
+    let string = "";
+
+    contain().arr.forEach((element) => {
+      string += `(${element}) -> `;
+    });
+    string += null;
+
+    return string;
+  };
+
+  return {
+    getLists,
+    append,
+    prepend,
+    size,
+    head,
+    tail,
+    at,
+    pop,
+    contain,
+    find,
+    ToString,
+  };
 };
 
 const ll = linkedLists();
+const lnl = linkedLists();
 
 ll.append(1, nodes);
 ll.append(2, nodes);
 ll.prepend(3, nodes); // 3 -> 1 -> 2
 ll.prepend(4, nodes); // 4 -> 3 -> 1 -> 2
 
+console.log(ll.ToString(ll.contain), lnl.ToString(lnl.contain));
