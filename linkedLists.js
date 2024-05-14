@@ -18,6 +18,8 @@ const linkedLists = () => {
       }
       tmp.next = nodes(val).node;
     }
+
+    return lists;
   };
 
   const prepend = (value, nodes) => {
@@ -27,6 +29,8 @@ const linkedLists = () => {
     tmp = nodes(value, lists).node;
 
     lists = tmp;
+
+    return lists;
   };
 
   const size = () => {
@@ -107,7 +111,7 @@ const linkedLists = () => {
       tmp = tmp.next;
     }
 
-    let isIncluded = () => arr.includes(value);
+    const isIncluded = () => arr.includes(value);
     return { isIncluded, arr };
   };
 
@@ -144,6 +148,30 @@ const linkedLists = () => {
     return string;
   };
 
+  const insertAt = (value, index, nodes) => {
+    let val = value;
+    let idx = index;
+    let node = nodes;
+    let count = 0;
+    let prev = null;
+    let curr = lists;
+
+    if (curr === null) {
+      return null
+    }
+
+    if (idx > 0) {
+      while (count !== idx) {
+        prev = curr;
+        curr = curr.next;
+        count++;
+      }
+      prev.next = node(val, curr).node;
+    } else {
+      curr = node(val, lists).node;
+    }
+  };
+
   return {
     getLists,
     append,
@@ -156,15 +184,13 @@ const linkedLists = () => {
     contain,
     find,
     ToString,
+    insertAt,
   };
 };
 
-const ll = linkedLists();
-const lnl = linkedLists();
 
-ll.append(1, nodes);
-ll.append(2, nodes);
-ll.prepend(3, nodes); // 3 -> 1 -> 2
-ll.prepend(4, nodes); // 4 -> 3 -> 1 -> 2
+export default linkedLists;
 
-console.log(ll.ToString(ll.contain), lnl.ToString(lnl.contain));
+
+
+
