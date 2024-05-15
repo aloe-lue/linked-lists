@@ -7,13 +7,13 @@ const lnl = linkedLists();
 console.log(
   'test no. 1 --- ll',
   '\n',
-  ll.append(1, nodes), // (1) -> null
+  ll.append({ value: 1, node: nodes }), // (1) -> null
   '\n',
-  ll.append(2, nodes), // (1) -> (2) -> null
+  ll.append({ value: 2, node: nodes }), // (1) -> (2) -> null
   '\n',
-  ll.prepend(3, nodes), // (3) -> (1) -> (2) -> null
+  ll.prepend({ value: 3, node: nodes }), // (3) -> (1) -> (2) -> null
   '\n',
-  ll.prepend(4, nodes), // (4) -> (3) -> (1) -> (2) -> null
+  ll.prepend({ value: 4, node: nodes }), // (4) -> (3) -> (1) -> (2) -> null
   '\n',
   ll.size(), // 4
   '\n',
@@ -23,22 +23,26 @@ console.log(
   '\n',
   ll.at(2), // 1
   '\n',
-  ll.pop(ll.size), // { val: 2, next: null }
+  ll.pop({ len: ll.size }), // { val: 2, next: null }
   '\n',
-  ll.contain(2).isIncluded(), // false
+  ll.contain({ value: 2 }).isIncluded(), // false
   '\n',
-  ll.find(3, ll.contain), // 1
+  ll.find({ value: 3, contain: ll.contain }), // 1
   '\n',
-  ll.insertAt(3, 3, nodes), // { val: 3: next: null }
+  ll.insertAt({ value: 3, index: 3, node: nodes }), // { val: 3: next: null }
   '\n',
-  ll.ToString(ll.contain), // (4) -> (3) -> (1) -> (3) -> null
+  ll.ToString({ contain: ll.contain }), // (4) -> (3) -> (1) -> (3) -> null
   '\n',
-  ll.removeAt(3), // { val: 3, next: null }
+  ll.removeAt({ index: 3 }), // { val: 3, next: null }
   '\n',
-  ll.ToString(ll.contain),
+  ll.ToString({ contain: ll.contain }),
+  '\n',
+  ll.insertAt({ value: 2, index: 1, node: nodes }), // (4) -> (2) -> (3) -> (1) ->  null
+  '\n',
+  ll.ToString({ contain: ll.contain }),
+  '\n',
   '\n',
   'test no. 2 --- lnl # empty values',
-
   '\n',
   lnl.size(),
   '\n',
@@ -46,19 +50,19 @@ console.log(
   '\n',
   lnl.tail(),
   '\n',
-  lnl.at(2),
+  lnl.at({ index: 2 }),
   '\n',
-  lnl.pop(lnl.size),
+  lnl.pop({ len: lnl.size }),
   '\n',
-  lnl.contain(2).isIncluded(),
+  lnl.contain({ value: 2 }).isIncluded(),
   '\n',
-  lnl.find(3, ll.contain),
+  lnl.find({ value: 3, contain: ll.contain }),
   '\n',
-  lnl.insertAt(3, 3, nodes),
+  lnl.insertAt({ value: 3, index: 3, node: nodes }),
   '\n',
-  lnl.ToString(lnl.contain),
+  lnl.ToString({ contain: lnl.contain }),
   '\n',
-  lnl.removeAt(1000),
+  lnl.removeAt({ index: 1000 }),
   '\n',
-  lnl.ToString(lnl.contain),
+  lnl.ToString({ contain: lnl.contain }),
 );
