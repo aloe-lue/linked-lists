@@ -1,4 +1,4 @@
-const nodes = (value, nextNodes) => {
+const nodes = ({ value, nextNodes }) => {
   let val = value ? value : null;
   let next = nextNodes ? nextNodes : null;
 
