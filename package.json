@@ -1,0 +1,8 @@
+{
+  "name": "linked-lists",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "prettier": "^3.2.5"
+  }
+}
