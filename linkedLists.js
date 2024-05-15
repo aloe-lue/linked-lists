@@ -5,27 +5,28 @@ const linkedLists = () => {
 
   const getLists = () => lists;
 
-  const append = (value, nodes) => {
+  const append = ({ value, node }) => {
     let val = value;
+    let nodes = node;
 
     if (lists === null) {
-      lists = nodes(val).node;
+      lists = nodes({ value: val, nextNodes: null }).node;
     } else {
       let tmp = lists;
-
       while (tmp.next !== null) {
         tmp = tmp.next;
       }
-      tmp.next = nodes(val).node;
+      tmp.next = nodes({ value: val, nextNodes: null }).node;
     }
     return lists;
   };
 
-  const prepend = (value, nodes) => {
+  const prepend = ({ value, node }) => {
+    let nodes = node;
     let val = value;
 
     let tmp = lists;
-    tmp = nodes(value, lists).node;
+    tmp = nodes({ value: val, nextNodes: lists }).node;
 
     lists = tmp;
 
@@ -62,12 +63,12 @@ const linkedLists = () => {
     return tmp.val;
   };
 
-  const at = (index) => {
+  const at = ({ index }) => {
     let tmp = lists;
     let aim = index;
 
     if (tmp === null) {
-      return null
+      return null;
     }
 
     for (let i = 0; i < aim - 1; i++) {
@@ -77,7 +78,7 @@ const linkedLists = () => {
     return tmp.val;
   };
 
-  const pop = (len) => {
+  const pop = ({ len }) => {
     let tmp = lists;
     let prev = null;
     let curr = tmp;
@@ -103,7 +104,7 @@ const linkedLists = () => {
     return curr;
   };
 
-  const contain = (value) => {
+  const contain = ({ value }) => {
     let tmp = lists;
     let val = value;
     let arr = [];
@@ -113,14 +114,15 @@ const linkedLists = () => {
       arr[i++] = tmp.val;
       tmp = tmp.next;
     }
+    const isIncluded = () => arr.includes(val);
+    const getArr = () => arr;
 
-    const isIncluded = () => arr.includes(value);
-    return { isIncluded, arr };
+    return { isIncluded, getArr };
   };
 
-  const find = (value, contains) => {
+  const find = ({ value, contain }) => {
     let val = value;
-    let contain = contains;
+    let contains = contain;
     let count = 0;
     let i = 0;
     let tmp = lists;
@@ -130,7 +132,7 @@ const linkedLists = () => {
       return count;
     }
 
-    while (contain(val).arr[i] !== val) {
+    while (contains({ value: val }).getArr()[i] !== val) {
       count++;
       i++;
     }
@@ -138,23 +140,25 @@ const linkedLists = () => {
     return count;
   };
 
-  const ToString = (contains) => {
+  const ToString = ({ contain }) => {
     let tmp = lists;
-    let contain = contains;
+    let contains = contain;
     let string = '';
 
-    contain().arr.forEach((element) => {
-      string += `( ${element} ) -> `;
-    });
+    contains({ value: null })
+      .getArr()
+      .forEach((element) => {
+        string += `( ${element} ) -> `;
+      });
     string += null;
 
     return string;
   };
 
-  const insertAt = (value, index, nodes) => {
+  const insertAt = ({ value, index, node }) => {
     let val = value;
     let idx = index;
-    let node = nodes;
+    let nodes = node;
     let count = 0;
     let prev = null;
     let curr = lists;
@@ -169,15 +173,15 @@ const linkedLists = () => {
         curr = curr.next;
         count++;
       }
-      prev.next = node(val, curr).node;
+      prev.next = nodes({ value: val, nextNodes: curr }).node;
     } else {
-      curr = node(val, lists).node;
+      curr = nodes({ value: val, nextNode: lists }).node;
     }
 
     return prev;
   };
 
-  const removeAt = (index) => {
+  const removeAt = ({ index }) => {
     let idx = index;
     let count = 0;
     let prev = null;
@@ -194,7 +198,6 @@ const linkedLists = () => {
     }
     returnVal = curr;
     prev.next = curr.next;
-    curr = prev;
 
     return returnVal;
   };
