@@ -1,4 +1,4 @@
-import nodes from "./Nodes.js";
+import nodes from './Nodes.js';
 
 const linkedLists = () => {
   let lists = null;
@@ -18,7 +18,6 @@ const linkedLists = () => {
       }
       tmp.next = nodes(val).node;
     }
-
     return lists;
   };
 
@@ -47,8 +46,7 @@ const linkedLists = () => {
 
   const head = () => {
     let tmp = lists;
-
-    return tmp.val;
+    return tmp === null ? null : tmp.val;
   };
 
   const tail = () => {
@@ -68,6 +66,10 @@ const linkedLists = () => {
     let tmp = lists;
     let aim = index;
 
+    if (tmp === null) {
+      return null
+    }
+
     for (let i = 0; i < aim - 1; i++) {
       tmp = tmp.next;
     }
@@ -79,12 +81,13 @@ const linkedLists = () => {
     let tmp = lists;
     let prev = null;
     let curr = tmp;
+    let leng = len;
 
     if (tmp === null) {
       return null;
     }
 
-    if (len().count === 1) {
+    if (leng().count === 1) {
       lists = null;
     }
 
@@ -97,7 +100,7 @@ const linkedLists = () => {
       prev.next = null;
     }
 
-    return prev;
+    return curr;
   };
 
   const contain = (value) => {
@@ -138,10 +141,10 @@ const linkedLists = () => {
   const ToString = (contains) => {
     let tmp = lists;
     let contain = contains;
-    let string = "";
+    let string = '';
 
     contain().arr.forEach((element) => {
-      string += `(${element}) -> `;
+      string += `( ${element} ) -> `;
     });
     string += null;
 
@@ -157,7 +160,7 @@ const linkedLists = () => {
     let curr = lists;
 
     if (curr === null) {
-      return null
+      return null;
     }
 
     if (idx > 0) {
@@ -170,6 +173,30 @@ const linkedLists = () => {
     } else {
       curr = node(val, lists).node;
     }
+
+    return prev;
+  };
+
+  const removeAt = (index) => {
+    let idx = index;
+    let count = 0;
+    let prev = null;
+    let curr = lists;
+    let returnVal = null;
+
+    if (curr === null) {
+      return null;
+    }
+    while (count !== idx) {
+      count++;
+      prev = curr;
+      curr = curr.next;
+    }
+    returnVal = curr;
+    prev.next = curr.next;
+    curr = prev;
+
+    return returnVal;
   };
 
   return {
@@ -185,12 +212,8 @@ const linkedLists = () => {
     find,
     ToString,
     insertAt,
+    removeAt,
   };
 };
 
-
 export default linkedLists;
-
-
-
-
